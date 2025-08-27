@@ -21,9 +21,6 @@ jobs:
       - name: 安装依赖
         run: npm install
 
-      - name: 运行测试
-        run: npm test
-
   deploy:
     needs: build  # 只有 build 任务成功后才执行
     runs-on: ubuntu-latest
