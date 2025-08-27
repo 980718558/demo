@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /var/www/github-actions-demo
+            cd /var/www/demo
             git pull origin main
             npm install
             pm2 restart server
