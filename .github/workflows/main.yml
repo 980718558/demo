@@ -28,9 +28,9 @@ jobs:
       - name: 部署到服务器
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: 47.107.176.158
-          username: root
-          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCvlm7D8GcykUN4C+IlBuR2X3+f8NeGaKnmdt56cSaAnkaiAQSnpRH02dn03lMq7Basmd2PE93n0PFl4a+TDbXs54/8vDjvOC1UIerJa0KC84tEx4hU7vPtGBxP8Eld3JK2pQq2dMPRZpAm6PFSzyfcaCDUIcN+vPCfdZQ+2ogzIpOG2qaup5s7zq9zgXnleVUE60i6woR66t1nzQJyDYBOgw0BndKhrEb61G/CY/q8cu0pCv90/AXxSXR14tg0FI7EYPrM2gvR1A000NKuMPrMSOOm1vNeaw+MiJnQiVtUNEYQcHwg3MflwumSKafhOfzXgbf7UA2IMI68NseEa4Gsfca7D9WpGjRVx5UOmV4WLuJ9aTraftJSPmpvKGfxo/Zhi02WW1Zm4sWCJo0vz6qabpE7K+UMhbKbbX6N8zJe/ny8xZ7QcuvxvY6VRRn1zenITlZZ1nFxN7QevPPsaDv9wFe+WDjOIUSWEy5WD9rjXBQgtUuC3WSgqWf2wbF5IRNAEvCOyEUUTjtkpjmR2Tb5DzI7uGCpLjWGFEKTQXBXfkODD2OIx2mV11+ZO575xBZ7NHZP73MZzF6CuCltkS/3wJHwH2kvgO1HQABO8YmTRi0BI8hTsn2J4u7yR52qLtKuflgJOhZEhfw9k/2FwDVz2Wt3pZ8+SQiVCsSFB8m0/w== github-actions
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/demo
             git pull origin main
