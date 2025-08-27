@@ -1,0 +1,41 @@
+name: Node.js CI/CD Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v3
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 运行测试
+        run: npm test
+
+  deploy:
+    needs: build  # 只有 build 任务成功后才执行
+    runs-on: ubuntu-latest
+    steps:
+      - name: 部署到服务器
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/github-actions-demo
+            git pull origin main
+            npm install
+            pm2 restart server
