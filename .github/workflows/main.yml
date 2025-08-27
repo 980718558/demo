@@ -21,19 +21,23 @@ jobs:
       - name: 安装依赖
         run: npm install
 
+      - name: npm build 打包
+        run: npm run build
+
   deploy:
     needs: build  # 只有 build 任务成功后才执行
     runs-on: ubuntu-latest
     steps:
       - name: 部署到服务器
-        uses: appleboy/ssh-action@v1.2.2
-        with:
+        uses: easingthemes/ssh-deploy@v2.1.1
+        env:
           # 私钥
-          key: ${{ secrets.PRIVATE_KEY }}
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          script: |
-            cd /var/www/demo
-            git pull origin main
-            npm install
-            pm2 restart server
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          # scp参数
+          ARGS: "-avzr --delete"
+          # 源目录，编译后生成的文件目录
+          SOURCE: "./dist"
+          # 目标地址 你在服务器上部署代码的地方
+          TARGET: "/root/web/demo"
