@@ -26,11 +26,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 部署到服务器
-        uses: appleboy/ssh-action@v1.0.3
+        uses: easingthemes/ssh-deploy@v2.1.1
         with:
+          # 私钥
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/demo
             git pull origin main
